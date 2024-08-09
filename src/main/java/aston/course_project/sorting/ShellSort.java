@@ -3,6 +3,8 @@ package aston.course_project.sorting;
 import java.util.Comparator;
 import java.util.List;
 
+import static java.util.Collections.swap;
+
 public class ShellSort<T> {
     Comparator<T> comparator;
     public ShellSort(Comparator<T> comparator){
@@ -19,10 +21,9 @@ public class ShellSort<T> {
                 int j = i;
                 // Проверяем, если элемент key меньше элемента из своего подмножества, то сортируем вставкой
                 while(j >= h && comparator.compare(key, toSort.get(j - h)) < 0){
-                    toSort.set(j, toSort.get(j - h));
+                    swap(toSort, j, j-h);
                     j -= h;
                 }
-                toSort.set(j, key);
             }
         }
     }
