@@ -1,5 +1,6 @@
 package aston.course_project.sorting;
 
+import aston.course_project.sorting.sort_strategy.ShellSort;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

@@ -1,10 +1,11 @@
-package aston.course_project.sorting;
+package aston.course_project.sorting.sort_strategy;
 
 import java.util.List;
 
 import static java.util.Collections.swap;
 
-public class ShellSort<T extends Comparable<? super T>> {
+public class ShellSort<T extends Comparable<? super T>> implements SortStrategy<T> {
+    @Override
     public void sort(List<T> toSort){
         int n = toSort.size(); // Кол-во элементов
 
