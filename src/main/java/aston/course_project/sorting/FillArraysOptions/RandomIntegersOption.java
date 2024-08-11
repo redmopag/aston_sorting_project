@@ -7,11 +7,12 @@ import java.util.Scanner;
 
 public class RandomIntegersOption implements ArrayFillOption {
 
-    public static List<Number> getRandomDiceNumber(int numberOfElements) {
-        List<Number> list = new ArrayList<>();
+    public static List<? super Number> getRandomDiceNumber(int numberOfElements) {
+        List<? super Number> list = new ArrayList<>();
 
         for (int i = 0; i < numberOfElements; i++) {
-            list.add((int) (Math.random() * 1000));
+            list.add((int)(Math.random() * 1000));
+//            list.add((Math.random() * 1000)); For double
         }
         return list;
     }
@@ -23,13 +24,7 @@ public class RandomIntegersOption implements ArrayFillOption {
         int x = scanner.nextInt();
 
         List<K> listOfNumbers = new ArrayList<>((Collection<? extends K>) getRandomDiceNumber(x));
-        System.out.println(x);
 
-        for (int i = 0; i < listOfNumbers.size(); i++) {
-            System.out.println(listOfNumbers.get(i));
-        }
-
-        System.out.println(listOfNumbers);
         return listOfNumbers;
     }
 }
