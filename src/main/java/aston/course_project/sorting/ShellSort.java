@@ -1,17 +1,11 @@
 package aston.course_project.sorting;
 
-import java.util.Comparator;
 import java.util.List;
 
 import static java.util.Collections.swap;
 
-public class ShellSort<T> {
-    Comparator<T> comparator;
-    public ShellSort(Comparator<T> comparator){
-        this.comparator = comparator;
-    }
-
-    public void shellSort(List<T> toSort){
+public class ShellSort<T extends Comparable<? super T>> {
+    public void sort(List<T> toSort){
         int n = toSort.size(); // Кол-во элементов
 
         // h - прыжок для выбора значения в подмножество
@@ -20,7 +14,7 @@ public class ShellSort<T> {
                 T key = toSort.get(i);
                 int j = i;
                 // Проверяем, если элемент key меньше элемента из своего подмножества, то сортируем вставкой
-                while(j >= h && comparator.compare(key, toSort.get(j - h)) < 0){
+                while(j >= h && key.compareTo(toSort.get(j - h)) < 0){
                     swap(toSort, j, j-h);
                     j -= h;
                 }
