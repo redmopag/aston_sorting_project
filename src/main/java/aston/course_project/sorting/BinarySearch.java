@@ -4,7 +4,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 public class BinarySearch<T> {
-    public int bin (List<? extends T> list, T key, Comparator<? super T> comparator) {
+
+    //возвращает индекс элемента в списке
+    //если нужного элемента нет - возвращает -1
+    public int binarySearch(List<? extends T> list, T key, Comparator<T> comparator) {
+        if (!list.contains(key))
+            return -1;
         return Collections.binarySearch(list, key, comparator);
     }
 }
