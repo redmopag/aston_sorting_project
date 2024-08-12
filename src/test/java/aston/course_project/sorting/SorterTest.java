@@ -1,6 +1,5 @@
 package aston.course_project.sorting;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,48 +9,85 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SorterTest {
-    private Sorter<Integer> sorter;
-
-    @BeforeEach
-    public void setUp() {
-        sorter = new Sorter<Integer>(new EvenSortStrategy<>());
-    }
 
     @Test
     public void testEvenSort() {
-        List<Integer> numbers = new ArrayList<>(Arrays.asList(5, 2, 3, 8, 1, 4));
-        sorter.sort(numbers);
-        assertEquals(Arrays.asList(5, 2, 3, 4, 1, 8), numbers);
+        List<CarTest> speed = new ArrayList<>(Arrays.asList(
+                new CarTest(3),
+                new CarTest(1),
+                new CarTest(8),
+                new CarTest(12),
+                new CarTest(7),
+                new CarTest(4)
+        ));
+
+        Sorter<CarTest> sorter = new Sorter<CarTest>(new EvenSortStrategy<>());
+        sorter.sort(speed);
+
+        List<CarTest> expected = Arrays.asList(
+                new CarTest(3),
+                new CarTest(1),
+                new CarTest(4),
+                new CarTest(8),
+                new CarTest(7),
+                new CarTest(12)
+        );
+
+        assertArrayEquals(expected.toArray(), speed.toArray());
     }
 
     @Test
     public void testOddSort() {
-        List<Integer> numbers = new ArrayList<>(Arrays.asList(5, 2, 3, 8, 1, 4));
-        sorter.sort(numbers);
+        List<CarTest> speed = new ArrayList<>(Arrays.asList(
+                new CarTest(8),
+                new CarTest(3),
+                new CarTest(1),
+                new CarTest(12),
+                new CarTest(9),
+                new CarTest(5)
+        ));
 
-        sorter.setStrategy(new OddSortStrategy<>());
-        sorter.sort(numbers);
-        assertEquals(Arrays.asList(1, 2, 3, 4, 5, 8), numbers);
+        Sorter<CarTest> sorter = new Sorter<CarTest>(new OddSortStrategy<>());
+        sorter.sort(speed);
+
+        List<CarTest> expected = Arrays.asList(
+                new CarTest(8),
+                new CarTest(1),
+                new CarTest(3),
+                new CarTest(12),
+                new CarTest(5),
+                new CarTest(9)
+        );
+
+        assertArrayEquals(expected.toArray(), speed.toArray());
     }
 
     @Test
-    public void testEmptyList() {
-        List<Integer> numbers = new ArrayList<>();
-        sorter.sort(numbers);
-        assertEquals(new ArrayList<>(), numbers);
-    }
+    public void testCombinedSort() {
+        List<CarTest> speed = new ArrayList<>(Arrays.asList(
+                new CarTest(5),
+                new CarTest(12),
+                new CarTest(3),
+                new CarTest(6),
+                new CarTest(9),
+                new CarTest(18)
+        ));
 
-    @Test
-    public void testNoEvenNumbers() {
-        List<Integer> numbers = new ArrayList<>(Arrays.asList(1, 3, 5, 7, 9));
-        sorter.sort(numbers);
-        assertEquals(Arrays.asList(1, 3, 5, 7, 9), numbers);
-    }
+        Sorter<CarTest> evenSorter = new Sorter<CarTest>(new EvenSortStrategy<>());
+        evenSorter.sort(speed);
 
-    @Test
-    public void testNoOddNumbers() {
-        List<Integer> numbers = new ArrayList<>(Arrays.asList(2, 4, 6, 8, 10));
-        sorter.sort(numbers);
-        assertEquals(Arrays.asList(2, 4, 6, 8, 10), numbers);
+        Sorter<CarTest> oddSorter = new Sorter<CarTest>(new OddSortStrategy<>());
+        oddSorter.sort(speed);
+
+        List<CarTest> expected = Arrays.asList(
+                new CarTest(3),
+                new CarTest(6),
+                new CarTest(5),
+                new CarTest(12),
+                new CarTest(9),
+                new CarTest(18)
+        );
+
+        assertArrayEquals(expected.toArray(), speed.toArray());
     }
 }

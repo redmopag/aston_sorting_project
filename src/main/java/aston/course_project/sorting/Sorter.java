@@ -2,7 +2,7 @@ package aston.course_project.sorting;
 
 import java.util.List;
 
-public class Sorter<T extends Comparable<? super T>> {
+public class Sorter<T extends IntegerProvider & Comparable<? super T>> {
     private SortStrategy<T> strategy;
 
     public Sorter(SortStrategy<T> strategy) {

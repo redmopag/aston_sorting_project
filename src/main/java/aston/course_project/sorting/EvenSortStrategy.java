@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class EvenSortStrategy<T extends Comparable<? super T>> implements SortStrategy<T> {
+class EvenSortStrategy<T extends IntegerProvider & Comparable<? super T>> implements SortStrategy<T> {
     @Override
     public void sort(List<T> list) {
         List<T> evenNumbers = new ArrayList<>();
 
-        for (T number : list) {
-            if (isEven((Integer) number)) {
-                evenNumbers.add(number);
+        for (T item : list) {
+            if (isEven(item.getIntegerValue())) {
+                evenNumbers.add(item);
             }
         }
 
@@ -19,13 +19,13 @@ class EvenSortStrategy<T extends Comparable<? super T>> implements SortStrategy<
 
         int index = 0;
         for (int i = 0; i < list.size(); i++) {
-            if (isEven((Integer) list.get(i))) {
+            if (isEven(list.get(i).getIntegerValue())) {
                 list.set(i, evenNumbers.get(index++));
             }
         }
     }
 
-    private boolean isEven(Integer number) {
+    private boolean isEven(int number) {
         return number % 2 == 0;
     }
 }
