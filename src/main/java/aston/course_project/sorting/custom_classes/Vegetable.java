@@ -1,14 +1,26 @@
 package aston.course_project.sorting.custom_classes;
 
-public class Vegetable {
-    private String color;
-    private double weight;
+public class Vegetable implements Comparable<Vegetable> {
     private String type;
+    private String color;
+    private Double weight;
 
     public Vegetable(Builder builder) {
         this.color = builder.color;
         this.weight = builder.weight;
         this.type = builder.type;
+    }
+
+    @Override
+    public int compareTo(Vegetable otherVegetable) {
+        int result = this.type.compareTo(otherVegetable.type);
+        if (result == 0) {
+            result = this.weight.compareTo(otherVegetable.weight);
+            if (result == 0) {
+                result = this.color.compareTo(otherVegetable.color);
+            }
+        }
+        return result;
     }
 
     public static class Builder {

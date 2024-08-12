@@ -1,14 +1,26 @@
 package aston.course_project.sorting.custom_classes;
 
-public class Book {
+public class Book implements Comparable<Book> {
     private String author;
     private String title;
-    private int pagesCount;
+    private Integer pagesCount;
 
     public Book(Builder builder) {
         this.author = builder.author;
         this.title = builder.title;
         this.pagesCount = builder.pagesCount;
+    }
+
+    @Override
+    public int compareTo(Book otherBook) {
+        int result = this.author.compareTo(otherBook.author);
+        if (result == 0) {
+            result = this.title.compareTo(otherBook.title);
+            if (result == 0) {
+                result = this.pagesCount.compareTo(otherBook.pagesCount);
+            }
+        }
+        return result;
     }
 
 

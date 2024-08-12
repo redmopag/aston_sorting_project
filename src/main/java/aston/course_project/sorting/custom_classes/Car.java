@@ -1,16 +1,28 @@
 package aston.course_project.sorting.custom_classes;
 
 
-public class Car {
-    private int power;
+public class Car implements Comparable<Car> {
+    private Integer power;
     private String model;
-    private int year;
+    private Integer year;
 
 
     private Car(Builder builder) {
         this.power = builder.power;
         this.model = builder.model;
         this.year = builder.year;
+    }
+
+    @Override
+    public int compareTo(Car otherCar) {
+        int result = this.model.compareTo(otherCar.model);
+        if (result == 0) {
+            result = this.power.compareTo(otherCar.power);
+            if (result == 0) {
+                result = this.year.compareTo(otherCar.year);
+            }
+        }
+        return result;
     }
 
     @Override
