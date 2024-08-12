@@ -1,28 +1,31 @@
 package aston.course_project.sorting;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-class EvenSortStrategy implements SortStrategy {
+class EvenSortStrategy<T extends Comparable<? super T>> implements SortStrategy<T> {
     @Override
-    public void sort(NumberWrapper[] array) {
-        List<NumberWrapper> evenNumbers = new ArrayList<>();
+    public void sort(List<T> list) {
+        List<T> evenNumbers = new ArrayList<>();
 
-        for (NumberWrapper number : array) {
-            if (number.getValue() % 2 == 0) {
+        for (T number : list) {
+            if (isEven((Integer) number)) {
                 evenNumbers.add(number);
             }
         }
 
-        NumberWrapper[] toSortArray = evenNumbers.toArray(new NumberWrapper[0]);
-
-        Sorter.shellSort(toSortArray);
+        Collections.sort(evenNumbers);
 
         int index = 0;
-        for (int i = 0; i < array.length; i++) {
-            if (array[i].getValue() % 2 == 0) {
-                array[i] = toSortArray[index++];
+        for (int i = 0; i < list.size(); i++) {
+            if (isEven((Integer) list.get(i))) {
+                list.set(i, evenNumbers.get(index++));
             }
         }
+    }
+
+    private boolean isEven(Integer number) {
+        return number % 2 == 0;
     }
 }

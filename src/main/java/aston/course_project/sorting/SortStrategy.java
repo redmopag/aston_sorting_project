@@ -1,5 +1,7 @@
 package aston.course_project.sorting;
 
-public interface SortStrategy {
-    void sort(NumberWrapper[] array);
+import java.util.List;
+
+public interface SortStrategy<T extends Comparable<? super T>> {
+    void sort(List<T> list);
 }
