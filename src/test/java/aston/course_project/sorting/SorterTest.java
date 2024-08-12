@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import aston.course_project.sorting.sort_strategy.Sort;
+import aston.course_project.sorting.sort_strategy.Sorter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SortTest {
+public class SorterTest {
     List<Integer> listActual;
     List<Integer> listExpected;
 
@@ -37,8 +37,8 @@ public class SortTest {
     public void sortStrategyTest() throws NoSortStrategyException {
         listCreate();
 
-        Sort<Integer> sort = new Sort<>(new ShellSort<Integer>());
-        sort.sort(listActual);
+        Sorter<Integer> sorter = new Sorter<>(new ShellSort<Integer>());
+        sorter.sort(listActual);
 
         assertEquals(listExpected, listActual);
     }

@@ -4,14 +4,14 @@ import aston.course_project.sorting.exceptions.NoSortStrategyException;
 
 import java.util.List;
 
-public class Sort<T extends Comparable<? super T>> {
+public class Sorter<T extends Comparable<? super T>> {
     private SortStrategy<T> sortStrategy;
 
-    public Sort(SortStrategy<T> sortStrategy){
+    public Sorter(SortStrategy<T> sortStrategy){
         this.sortStrategy = sortStrategy;
     }
 
-    public void setSort(SortStrategy<T> sortStrategy){
+    public void setSortStrategy(SortStrategy<T> sortStrategy){
         this.sortStrategy = sortStrategy;
     }
 
