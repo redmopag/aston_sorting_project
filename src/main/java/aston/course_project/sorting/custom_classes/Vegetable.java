@@ -23,6 +23,11 @@ public class Vegetable implements Comparable<Vegetable> {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Vegetable: Type - " + type + ", Weight - " + weight + ", Color - " + color;
+    }
+
     public static class Builder {
         private String color;
         private double weight;
