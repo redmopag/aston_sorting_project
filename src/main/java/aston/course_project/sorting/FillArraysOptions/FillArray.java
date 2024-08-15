@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class FillArrayWithoutReflection implements ArrayFillOption {
+public class FillArray implements ArrayFillOption {
     private final Scanner scanner = new Scanner(System.in);
 
     @Override
