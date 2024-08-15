@@ -1,8 +1,8 @@
-import aston.course_project.sorting.BinarySearch;
+package aston.course_project.sorting;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Comparator;
 import java.util.List;
 
 //пока что тесты без кастомных классов, после слияния изменю код тестов

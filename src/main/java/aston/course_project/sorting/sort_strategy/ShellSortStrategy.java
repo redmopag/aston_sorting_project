@@ -1,12 +1,14 @@
 package aston.course_project.sorting.sort_strategy;
 
+import aston.course_project.sorting.Parity;
+
 import java.util.List;
 
 import static java.util.Collections.swap;
 
-public class ShellSort<T extends Comparable<? super T>> implements SortStrategy<T> {
+public class ShellSortStrategy implements SortStrategy {
     @Override
-    public void sort(List<T> toSort){
+    public <T extends Parity & Comparable<? super T>> void sort(List<T> toSort){
         int n = toSort.size(); // Кол-во элементов
 
         // h - прыжок для выбора значения в подмножество
