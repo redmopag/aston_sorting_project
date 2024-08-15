@@ -1,11 +1,14 @@
 package aston.course_project.sorting.custom_classes;
 
-public class Vegetable implements Comparable<Vegetable> {
-    private String type;
-    private String color;
-    private Double weight;
+import aston.course_project.sorting.Parity;
+import aston.course_project.sorting.exceptions.InvalidArgumentException;
 
-    public Vegetable(Builder builder) {
+public class Vegetable implements Comparable<Vegetable>, Parity {
+    private final String type;
+    private final String color;
+    private final int weight;
+
+    private Vegetable(Builder builder) {
         this.color = builder.color;
         this.weight = builder.weight;
         this.type = builder.type;
@@ -15,7 +18,7 @@ public class Vegetable implements Comparable<Vegetable> {
     public int compareTo(Vegetable otherVegetable) {
         int result = this.type.compareTo(otherVegetable.type);
         if (result == 0) {
-            result = this.weight.compareTo(otherVegetable.weight);
+            result = this.weight - otherVegetable.weight;
             if (result == 0) {
                 result = this.color.compareTo(otherVegetable.color);
             }
@@ -28,24 +31,28 @@ public class Vegetable implements Comparable<Vegetable> {
         return "Vegetable: Type - " + type + ", Weight - " + weight + ", Color - " + color;
     }
 
+    @Override
+    public boolean isOdd() {
+        return weight % 2 != 0;
+    }
+
     public static class Builder {
-        private String color;
-        private double weight;
-        private String type;
+        private final String color;
+        private final int weight;
+        private final String type;
 
-        public Builder withColor(String color) {
+        public Builder(String color, int weight, String type) throws InvalidArgumentException {
+            if(color.isEmpty()){
+                throw new InvalidArgumentException("Поле цвет не может быть пустым");
+            } else if(type.isEmpty()){
+                throw new InvalidArgumentException("Поле тип не может быть пустым");
+            } else if(weight <= 0){
+                throw new InvalidArgumentException("Поле вес не может быть меньше или равно нулю");
+            }
+
             this.color = color;
-            return this;
-        }
-
-        public Builder withWeight(double weight) {
             this.weight = weight;
-            return this;
-        }
-
-        public Builder withType(String type) {
             this.type = type;
-            return this;
         }
 
         public Vegetable build() {
@@ -57,23 +64,11 @@ public class Vegetable implements Comparable<Vegetable> {
         return color;
     }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
-
     public double getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
     public String getType() {
         return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }
