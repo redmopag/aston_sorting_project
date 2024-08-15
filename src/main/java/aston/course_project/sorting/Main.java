@@ -6,6 +6,9 @@ import aston.course_project.sorting.custom_classes.Vegetable;
 import aston.course_project.sorting.exceptions.InvalidArgumentException;
 import aston.course_project.sorting.fill_array.ArrayFactory;
 import aston.course_project.sorting.fill_array.ArrayFromFileFactory;
+import aston.course_project.sorting.sort_strategy.EvenSortStrategy;
+import aston.course_project.sorting.sort_strategy.OddSortStrategy;
+import aston.course_project.sorting.sort_strategy.ShellSortStrategy;
 import aston.course_project.sorting.sort_strategy.SortStrategy;
 import aston.course_project.sorting.work_with_array.WorkWithArray;
 
@@ -22,7 +25,16 @@ public class Main {
     private static final Map<Integer, ArrayFactory> arrayFactoryMap = new HashMap<>();
     private static final Map<Integer, SortStrategy> arraySortMap = new HashMap<>();
 
+    public static void init(){
+        arrayFactoryMap.put(1, new ArrayFromFileFactory());
+
+        arraySortMap.put(1, new ShellSortStrategy());
+        arraySortMap.put(2, new EvenSortStrategy());
+        arraySortMap.put(3, new OddSortStrategy());
+    }
+
     public static void main(String[] args) {
+        init();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
