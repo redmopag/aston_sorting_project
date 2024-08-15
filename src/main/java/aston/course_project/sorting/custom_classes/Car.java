@@ -1,7 +1,6 @@
 package aston.course_project.sorting.custom_classes;
 
 
-import aston.course_project.sorting.Parity;
 import aston.course_project.sorting.exceptions.InvalidArgumentException;
 
 public class Car implements Comparable<Car>, Parity {

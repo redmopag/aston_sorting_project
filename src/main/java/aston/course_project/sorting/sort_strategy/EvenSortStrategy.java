@@ -1,6 +1,6 @@
 package aston.course_project.sorting.sort_strategy;
 
-import aston.course_project.sorting.Parity;
+import aston.course_project.sorting.custom_classes.Parity;
 
 import java.util.ArrayList;
 import java.util.List;

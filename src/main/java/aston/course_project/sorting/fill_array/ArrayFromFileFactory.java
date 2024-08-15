@@ -21,74 +21,46 @@ public class ArrayFromFileFactory implements ArrayFactory {
     }
 
     @Override
-    public List<Car> createCarList(int n) {
-        List<Car> carList = new ArrayList<>(n);
+    public <T> List<T> fillArray(int n) throws InvalidArgumentException {
+        List<T> list = new ArrayList<>(n);
 
         try(BufferedReader reader = Files.newBufferedReader(Paths.get(path))){
-            while(reader.readLine() != null){
-                int power = Integer.parseInt(reader.readLine().split(": ")[1]);
-                String model = reader.readLine().split(": ")[1];
-                int year = Integer.parseInt(reader.readLine().split(": ")[1]);
+            String line = reader.readLine().toLowerCase();
+            if(line.equals("car")){
+                do {
+                    int power = Integer.parseInt(reader.readLine().split(": ")[1]);
+                    String model = reader.readLine().split(": ")[1];
+                    int year = Integer.parseInt(reader.readLine().split(": ")[1]);
 
-                carList.add(new Car.Builder(power, model, year).build());
+                    list.add((T) new Car.Builder(power, model, year).build());
 
-                reader.readLine();
+                    reader.readLine();
+                } while(reader.readLine() != null && n-- > 0);
+            } else if(line.equals("book")){
+                do{
+                    String author = reader.readLine().split(": ")[1];
+                    String title = reader.readLine().split(": ")[1];
+                    int pagesCount = Integer.parseInt(reader.readLine().split(": ")[1]);
+
+                    list.add((T) new Book.Builder(author, title, pagesCount).build());
+
+                    reader.readLine();
+                } while(reader.readLine() != null && n-- > 0);
+            } else if(line.equals("vegetable")){
+                do {
+                    String color = reader.readLine().split(": ")[1];
+                    String type = reader.readLine().split(": ")[1];
+                    int weight = Integer.parseInt(reader.readLine().split(": ")[1]);
+
+                    list.add((T) new Vegetable.Builder(color, weight, type).build());
+
+                    reader.readLine();
+                } while(reader.readLine() != null && n-- > 0);
             }
-
         } catch (IOException e) {
             System.out.println("Не удалось прочитать файл");
-        } catch (InvalidArgumentException e) {
-            System.out.println("Не удалось создать объект класса Car: " + e.getMessage());
         }
 
-        return carList;
-    }
-
-    @Override
-    public List<Book> createBookList(int n) {
-        List<Book> bookList = new ArrayList<>(n);
-
-        try(BufferedReader reader = Files.newBufferedReader(Paths.get(path))){
-            while(reader.readLine() != null){
-                String author = reader.readLine().split(": ")[1];
-                String title = reader.readLine().split(": ")[1];
-                int pagesCount = Integer.parseInt(reader.readLine().split(": ")[1]);
-
-                bookList.add(new Book.Builder(author, title, pagesCount).build());
-
-                reader.readLine();
-            }
-
-        } catch (IOException e) {
-            System.out.println("Не удалось прочитать файл");
-        } catch (InvalidArgumentException e) {
-            System.out.println("Не удалось создать объект класса Car: " + e.getMessage());
-        }
-
-        return bookList;
-    }
-
-    @Override
-    public List<Vegetable> createVegetableList(int n) {
-        List<Vegetable> vegetableList = new ArrayList<>(n);
-
-        try(BufferedReader reader = Files.newBufferedReader(Paths.get(path))){
-            while(reader.readLine() != null){
-                String color = reader.readLine().split(": ")[1];
-                String type = reader.readLine().split(": ")[1];
-                int weight = Integer.parseInt(reader.readLine().split(": ")[1]);
-
-                vegetableList.add(new Vegetable.Builder(color, weight, type).build());
-
-                reader.readLine();
-            }
-
-        } catch (IOException e) {
-            System.out.println("Не удалось прочитать файл");
-        } catch (InvalidArgumentException e) {
-            System.out.println("Не удалось создать объект класса Car: " + e.getMessage());
-        }
-
-        return vegetableList;
+        return list;
     }
 }

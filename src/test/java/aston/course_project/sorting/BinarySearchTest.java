@@ -1,5 +1,6 @@
 package aston.course_project.sorting;
 
+import aston.course_project.sorting.work_with_array.BinarySearch;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ public class BinarySearchTest {
     public void binarySearchMethod() {
         //отсортированный список
         List<Integer> list = List.of(1, 2, 3);
-        BinarySearch<Integer> bin = new BinarySearch<>();
+        BinarySearch bin = new BinarySearch();
         // возвращает -1, если нужного элемента нет
         Assertions.assertEquals(bin.binarySearch(list,7), -1);
         //возвращает индекс элемента из списка, который мы ищем

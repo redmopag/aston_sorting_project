@@ -1,5 +1,6 @@
 package aston.course_project.sorting;
 
+import aston.course_project.sorting.custom_classes.Parity;
 import aston.course_project.sorting.exceptions.NoSortStrategyException;
 import aston.course_project.sorting.sort_strategy.EvenSortStrategy;
 import aston.course_project.sorting.sort_strategy.OddSortStrategy;
@@ -131,14 +132,7 @@ class SorterTest {
 
     @Test
     public void shellSortTest() throws NoSortStrategyException {
-        List<CarTest> speed = new ArrayList<>(Arrays.asList(
-                new CarTest(5),
-                new CarTest(12),
-                new CarTest(3),
-                new CarTest(6),
-                new CarTest(9),
-                new CarTest(18)
-        ));
+        List<CarTest> speed = createList();
 
         List<CarTest> expected = Arrays.asList(
                 new CarTest(3),
@@ -153,5 +147,17 @@ class SorterTest {
         shellSort.sort(speed);
 
         assertArrayEquals(expected.toArray(), speed.toArray());
+    }
+
+    private <T> List<T> createList(){
+        List<T> list = new ArrayList<>();
+        list.add((T) new CarTest(5));
+        list.add((T) new CarTest(12));
+        list.add((T) new CarTest(3));
+        list.add((T) new CarTest(6));
+        list.add((T) new CarTest(9));
+        list.add((T) new CarTest(18));
+
+        return list;
     }
 }

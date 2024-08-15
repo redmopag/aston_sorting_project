@@ -1,12 +1,12 @@
-package aston.course_project.sorting;
+package aston.course_project.sorting.work_with_array;
 
 import java.util.List;
 
-public class BinarySearch<T> {
+public class BinarySearch {
 
     //возвращает индекс элемента в списке
     //если нужного элемента нет - возвращает -1
-    public int binarySearch(List<? extends Comparable<? super T>> list, T key) {
+    public <T> int binarySearch(List<? extends Comparable<? super T>> list, T key) {
         if (list.isEmpty()) {
             return -1;
         }
