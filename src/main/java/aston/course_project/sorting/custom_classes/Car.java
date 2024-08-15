@@ -1,7 +1,9 @@
 package aston.course_project.sorting.custom_classes;
 
 
-public class Car implements Comparable<Car> {
+import aston.course_project.sorting.Parity;
+
+public class Car implements Comparable<Car>, Parity {
     private Integer power;
     private String model;
     private Integer year;
@@ -28,6 +30,11 @@ public class Car implements Comparable<Car> {
     @Override
     public String toString() {
         return "Car: Model - " + model + ", Power - " + power + " HP, Year - " + year;
+    }
+
+    @Override
+    public boolean isOdd() {
+        return power % 2 != 0;
     }
 
 

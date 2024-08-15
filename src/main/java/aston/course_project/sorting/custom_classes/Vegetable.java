@@ -1,11 +1,13 @@
 package aston.course_project.sorting.custom_classes;
 
-public class Vegetable implements Comparable<Vegetable> {
-    private String type;
-    private String color;
-    private Double weight;
+import aston.course_project.sorting.Parity;
 
-    public Vegetable(Builder builder) {
+public class Vegetable implements Comparable<Vegetable>, Parity {
+    private final String type;
+    private final String color;
+    private final int weight;
+
+    private Vegetable(Builder builder) {
         this.color = builder.color;
         this.weight = builder.weight;
         this.type = builder.type;
@@ -15,7 +17,7 @@ public class Vegetable implements Comparable<Vegetable> {
     public int compareTo(Vegetable otherVegetable) {
         int result = this.type.compareTo(otherVegetable.type);
         if (result == 0) {
-            result = this.weight.compareTo(otherVegetable.weight);
+            result = this.weight - otherVegetable.weight;
             if (result == 0) {
                 result = this.color.compareTo(otherVegetable.color);
             }
@@ -28,9 +30,14 @@ public class Vegetable implements Comparable<Vegetable> {
         return "Vegetable: Type - " + type + ", Weight - " + weight + ", Color - " + color;
     }
 
+    @Override
+    public boolean isOdd() {
+        return weight % 2 != 0;
+    }
+
     public static class Builder {
         private String color;
-        private double weight;
+        private int weight;
         private String type;
 
         public Builder withColor(String color) {
@@ -38,7 +45,7 @@ public class Vegetable implements Comparable<Vegetable> {
             return this;
         }
 
-        public Builder withWeight(double weight) {
+        public Builder withWeight(int weight) {
             this.weight = weight;
             return this;
         }
@@ -57,23 +64,11 @@ public class Vegetable implements Comparable<Vegetable> {
         return color;
     }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
-
     public double getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
     public String getType() {
         return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }

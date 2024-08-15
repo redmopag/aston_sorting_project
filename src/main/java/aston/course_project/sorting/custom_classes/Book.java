@@ -1,6 +1,8 @@
 package aston.course_project.sorting.custom_classes;
 
-public class Book implements Comparable<Book> {
+import aston.course_project.sorting.Parity;
+
+public class Book implements Comparable<Book>, Parity {
     private String author;
     private String title;
     private Integer pagesCount;
@@ -26,6 +28,11 @@ public class Book implements Comparable<Book> {
     @Override
     public String toString() {
         return "Book: Title - " + title + ", Author - " + author + ", Count pages - " + pagesCount;
+    }
+
+    @Override
+    public boolean isOdd() {
+        return pagesCount % 2 != 0;
     }
 
     public static class Builder {
