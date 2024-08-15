@@ -1,13 +1,14 @@
 package aston.course_project.sorting.custom_classes;
 
 import aston.course_project.sorting.Parity;
+import aston.course_project.sorting.exceptions.InvalidArgumentException;
 
 public class Book implements Comparable<Book>, Parity {
-    private String author;
-    private String title;
-    private Integer pagesCount;
+    private final String author;
+    private final String title;
+    private final Integer pagesCount;
 
-    public Book(Builder builder) {
+    private Book(Builder builder) {
         this.author = builder.author;
         this.title = builder.title;
         this.pagesCount = builder.pagesCount;
@@ -36,40 +37,27 @@ public class Book implements Comparable<Book>, Parity {
     }
 
     public static class Builder {
-        private String author;
-        private String title;
-        private int pagesCount;
+        private final String author;
+        private final String title;
+        private final int pagesCount;
 
-        public Builder author(String author) {
+        public Builder(String author, String title, int pagesCount) throws InvalidArgumentException {
+            if(author.isEmpty()){
+                throw new InvalidArgumentException("Поле автор должно быть заполнено");
+            } else if(title.isEmpty()){
+                throw new InvalidArgumentException("Поле название должно быть заполнено");
+            } else if(pagesCount <= 0){
+                throw new InvalidArgumentException("Поле кол-во страниц не должно быть меньше или равно нулю");
+            }
+
             this.author = author;
-            return this;
-        }
-
-        public Builder title(String title) {
             this.title = title;
-            return this;
-        }
-
-        public Builder pagesCount(int pagesCount) {
             this.pagesCount = pagesCount;
-            return this;
         }
 
         public Book build() {
             return new Book(this);
         }
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setPagesCount(int pagesCount) {
-        this.pagesCount = pagesCount;
     }
 
     public String getAuthor() {
