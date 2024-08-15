@@ -1,5 +1,10 @@
 package aston.course_project.sorting;
 
+import aston.course_project.sorting.exceptions.NoSortStrategyException;
+import aston.course_project.sorting.sort_strategy.EvenSortStrategy;
+import aston.course_project.sorting.sort_strategy.OddSortStrategy;
+import aston.course_project.sorting.sort_strategy.ShellSortStrategy;
+import aston.course_project.sorting.sort_strategy.Sorter;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,7 +15,7 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CarTest implements Parity, Comparable<CarTest> {
-    private int speed;
+    private final int speed;
 
     public CarTest(int speed) {
         this.speed = speed;
@@ -44,7 +49,7 @@ class CarTest implements Parity, Comparable<CarTest> {
 class SorterTest {
 
     @Test
-    public void testEvenSort() {
+    public void testEvenSort() throws NoSortStrategyException {
         List<CarTest> speed = new ArrayList<>(Arrays.asList(
                 new CarTest(3),
                 new CarTest(1),
@@ -54,7 +59,7 @@ class SorterTest {
                 new CarTest(4)
         ));
 
-        Sorter<CarTest> sorter = new Sorter<CarTest>(new EvenSortStrategy<>());
+        Sorter sorter = new Sorter(new EvenSortStrategy());
         sorter.sort(speed);
 
         List<CarTest> expected = Arrays.asList(
@@ -70,7 +75,7 @@ class SorterTest {
     }
 
     @Test
-    public void testOddSort() {
+    public void testOddSort() throws NoSortStrategyException {
         List<CarTest> speed = new ArrayList<>(Arrays.asList(
                 new CarTest(8),
                 new CarTest(3),
@@ -80,7 +85,7 @@ class SorterTest {
                 new CarTest(5)
         ));
 
-        Sorter<CarTest> sorter = new Sorter<CarTest>(new OddSortStrategy<>());
+        Sorter sorter = new Sorter(new OddSortStrategy());
         sorter.sort(speed);
 
         List<CarTest> expected = Arrays.asList(
@@ -96,7 +101,7 @@ class SorterTest {
     }
 
     @Test
-    public void testCombinedSort() {
+    public void testCombinedSort() throws NoSortStrategyException {
         List<CarTest> speed = new ArrayList<>(Arrays.asList(
                 new CarTest(5),
                 new CarTest(12),
@@ -106,12 +111,6 @@ class SorterTest {
                 new CarTest(18)
         ));
 
-        Sorter<CarTest> evenSorter = new Sorter<CarTest>(new EvenSortStrategy<>());
-        evenSorter.sort(speed);
-
-        Sorter<CarTest> oddSorter = new Sorter<CarTest>(new OddSortStrategy<>());
-        oddSorter.sort(speed);
-
         List<CarTest> expected = Arrays.asList(
                 new CarTest(3),
                 new CarTest(6),
@@ -120,6 +119,38 @@ class SorterTest {
                 new CarTest(9),
                 new CarTest(18)
         );
+
+        Sorter evenSorter = new Sorter(new EvenSortStrategy());
+        evenSorter.sort(speed);
+
+        Sorter oddSorter = new Sorter(new OddSortStrategy());
+        oddSorter.sort(speed);
+
+        assertArrayEquals(expected.toArray(), speed.toArray());
+    }
+
+    @Test
+    public void shellSortTest() throws NoSortStrategyException {
+        List<CarTest> speed = new ArrayList<>(Arrays.asList(
+                new CarTest(5),
+                new CarTest(12),
+                new CarTest(3),
+                new CarTest(6),
+                new CarTest(9),
+                new CarTest(18)
+        ));
+
+        List<CarTest> expected = Arrays.asList(
+                new CarTest(3),
+                new CarTest(5),
+                new CarTest(6),
+                new CarTest(9),
+                new CarTest(12),
+                new CarTest(18)
+        );
+
+        Sorter shellSort = new Sorter(new ShellSortStrategy());
+        shellSort.sort(speed);
 
         assertArrayEquals(expected.toArray(), speed.toArray());
     }

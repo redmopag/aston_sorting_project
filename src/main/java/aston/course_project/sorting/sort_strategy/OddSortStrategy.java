@@ -1,12 +1,13 @@
-package aston.course_project.sorting;
+package aston.course_project.sorting.sort_strategy;
+
+import aston.course_project.sorting.Parity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-class OddSortStrategy<T extends Parity & Comparable<? super T>> implements SortStrategy<T> {
+public class OddSortStrategy implements SortStrategy {
     @Override
-    public void sort(List<T> list) {
+    public <T extends Parity & Comparable<? super T>> void sort(List<T> list) {
         List<T> oddNumbers = new ArrayList<>();
 
         // Фильтруем нечетные числа
@@ -17,7 +18,7 @@ class OddSortStrategy<T extends Parity & Comparable<? super T>> implements SortS
         }
 
         // Сортируем нечетные числа
-        Collections.sort(oddNumbers);
+        new ShellSortStrategy().sort(oddNumbers);
 
         // Вставляем отсортированные нечетные числа обратно в исходный список
         int index = 0;

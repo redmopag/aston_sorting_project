@@ -1,12 +1,13 @@
-package aston.course_project.sorting;
+package aston.course_project.sorting.sort_strategy;
+
+import aston.course_project.sorting.Parity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-class EvenSortStrategy<T extends Parity & Comparable<? super T>> implements SortStrategy<T> {
+public class EvenSortStrategy implements SortStrategy {
     @Override
-    public void sort(List<T> list) {
+    public <T extends Parity & Comparable<? super T>> void sort(List<T> list) {
         List<T> evenNumbers = new ArrayList<>();
 
         // Фильтруем четные числа
@@ -17,7 +18,7 @@ class EvenSortStrategy<T extends Parity & Comparable<? super T>> implements Sort
         }
 
         // Сортируем четные числа
-        Collections.sort(evenNumbers);
+        new ShellSortStrategy().sort(evenNumbers);
 
         // Вставляем отсортированные четные числа обратно в исходный список
         int index = 0;
