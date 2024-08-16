@@ -5,7 +5,9 @@ import aston.course_project.sorting.custom_classes.Car;
 import aston.course_project.sorting.custom_classes.Vegetable;
 import aston.course_project.sorting.exceptions.InvalidArgumentException;
 import aston.course_project.sorting.fill_arrays_options.ArrayFillOption;
-import aston.course_project.sorting.fill_arrays_options.ArrayFromFileFillOption;
+import aston.course_project.sorting.fill_arrays_options.FillArrayByUser;
+import aston.course_project.sorting.fill_arrays_options.FillArrayFromFile;
+import aston.course_project.sorting.fill_arrays_options.FillArrayRandom;
 import aston.course_project.sorting.sort_strategy.EvenSortStrategy;
 import aston.course_project.sorting.sort_strategy.OddSortStrategy;
 import aston.course_project.sorting.sort_strategy.ShellSortStrategy;
@@ -18,12 +20,13 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
-    private static final WorkWithArray workWithArray = new WorkWithArray();
     private static final Map<Integer, ArrayFillOption> arrayFactoryMap = new HashMap<>();
     private static final Map<Integer, SortStrategy> arraySortMap = new HashMap<>();
 
     public static void init(){
-        arrayFactoryMap.put(1, new ArrayFromFileFillOption());
+        arrayFactoryMap.put(1, new FillArrayFromFile());
+        arrayFactoryMap.put(2, new FillArrayRandom());
+        arrayFactoryMap.put(3, new FillArrayByUser());
 
         arraySortMap.put(1, new ShellSortStrategy());
         arraySortMap.put(2, new EvenSortStrategy());
@@ -33,44 +36,61 @@ public class Main {
     public static void main(String[] args) {
         init();
         Scanner scanner = new Scanner(System.in);
+        boolean isIncorrect;
 
         while (true) {
-            System.out.println("Выберите вариант заполнения коллекции:");
-            System.out.println("1. Заполнить из файла");
-            System.out.println("2. Заполнить случайными числами");
-            System.out.println("3. Заполнить вручную");
-            System.out.println("4. Выход");
+            WorkWithArray workWithArray = new WorkWithArray();
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Очистка буфера после считывания числа
-            if (choice == 4) { // Завершение работы программы
-                break;
-            } else if (choice == 1) {
-                System.out.println("Введите путь до файла: ");
-                String path = scanner.nextLine();
+            do {
+                isIncorrect = false;
 
-                workWithArray.setPath(path);
-                ArrayFillOption currentFactory = arrayFactoryMap.get(choice);
-                if(currentFactory instanceof ArrayFromFileFillOption){
-                    ((ArrayFromFileFillOption) currentFactory).setPath(path);
+                System.out.println("Выберите вариант заполнения коллекции:");
+                System.out.println("1. Заполнить из файла");
+                System.out.println("2. Заполнить случайными числами");
+                System.out.println("3. Заполнить вручную");
+                System.out.println("4. Выход");
+
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // Очистка буфера после считывания числа
+                switch (choice) {
+                    case 4:
+                        return;
+                    case 1:
+                        System.out.println("Введите путь до файла: ");
+                        workWithArray.setPath(scanner.nextLine());
+                        workWithArray.setArrayFactory(arrayFactoryMap.get(choice));
+                        break;
+                    case 2:
+                    case 3:
+                        System.out.println("Введите класс, объекты которого заполнят массив:");
+                        System.out.println("Car");
+                        System.out.println("Book");
+                        System.out.println("Vegetable");
+
+                        workWithArray.setClassType(scanner.nextLine().toLowerCase());
+                        workWithArray.setArrayFactory(arrayFactoryMap.get(choice));
+                        break;
+                    default:
+                        System.out.println("Неверный ввод, попробуйте снова");
+                        isIncorrect = true;
+                        break;
                 }
-                workWithArray.setArrayFactory(currentFactory);
-            } else{
-                System.out.println("Введите класс, объекты которого заполнят массив:");
-                System.out.println("Car");
-                System.out.println("Book");
-                System.out.println("Vegetable");
-
-                workWithArray.setClassType(scanner.nextLine().toLowerCase());
-                workWithArray.setArrayFactory(arrayFactoryMap.get(choice));
-            }
+            } while (isIncorrect);
             System.out.println();
 
-            System.out.println("Введите длину массива:");
+            int length;
+            do{
+                isIncorrect = false;
+                System.out.println("Введите длину массива:");
+                length = scanner.nextInt();
+                scanner.nextLine(); // Очистка буфера
+                if(length < 0){
+                    System.out.println("Длина массива не может быть отрицательной");
+                    isIncorrect = true;
+                }
+                System.out.println();
+            } while (isIncorrect);
 
-            int length = scanner.nextInt();
-            scanner.nextLine(); // Очистка буфера
-            System.out.println();
             try {
                 workWithArray.setList(length);
             } catch (InvalidArgumentException e){
@@ -79,12 +99,22 @@ public class Main {
                 System.out.println("Не удалось прочитать файл");
             }
 
-            System.out.println("Выберите вариант способа сортировки коллекции:");
-            System.out.println("1. Сортировка всех элементов коллекции");
-            System.out.println("2. Сортировка только четных элементов коллекции");
-            System.out.println("3. Сортировка только нечётных элементов коллекции");
+            int sortChoice;
+            do {
+                isIncorrect = false;
 
-            int sortChoice = scanner.nextInt();
+                System.out.println("Выберите вариант способа сортировки коллекции:");
+                System.out.println("1. Сортировка всех элементов коллекции");
+                System.out.println("2. Сортировка только четных элементов коллекции");
+                System.out.println("3. Сортировка только нечётных элементов коллекции");
+
+                sortChoice = scanner.nextInt();
+                if(sortChoice < 1 || sortChoice > 3){
+                    System.out.println("Неверный ввод, попробуйте снова");
+                    isIncorrect = true;
+                }
+            } while (isIncorrect);
+
             try {
                 workWithArray.sortArray(arraySortMap.get(sortChoice));
             } catch (InvalidArgumentException e){
@@ -107,8 +137,6 @@ public class Main {
                 }
             }
         }
-
-        scanner.close();
     }
 
     private static Vegetable getVegetable(Scanner scanner) throws InvalidArgumentException{

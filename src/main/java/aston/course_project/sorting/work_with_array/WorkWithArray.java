@@ -1,5 +1,6 @@
 package aston.course_project.sorting.work_with_array;
 
+import aston.course_project.sorting.custom_classes.Parity;
 import aston.course_project.sorting.fill_arrays_options.ArrayFillOption;
 import aston.course_project.sorting.custom_classes.Book;
 import aston.course_project.sorting.custom_classes.Car;
