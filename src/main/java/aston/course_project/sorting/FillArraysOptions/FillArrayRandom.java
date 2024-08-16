@@ -1,33 +1,28 @@
 package aston.course_project.sorting.FillArraysOptions;
 
+import aston.course_project.sorting.exceptions.InvalidTypeException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class FillArrayRandom implements ArrayFillOption {
-    private Scanner scanner = new Scanner(System.in);
-    private Random random = new Random();
+    private final Random random = new Random();
+
+    private String classType;
+
+    public void setClassType(String classType){
+        this.classType = classType;
+    }
 
     @Override
-    public <T> List<T> fillArray() throws Exception {
+    public <T> List<T> fillArray(int n) throws InvalidTypeException {
+        List<Object> arrayList = new ArrayList<>(n);
 
-        System.out.print("Введите количество объектов, которые хотите создать: ");
-        int capacity = scanner.nextInt();
-
-        List<Object> arrayList = new ArrayList<>(capacity);
-
-        System.out.println("Выберите класс для создания объекта:");
-        System.out.println("1. Car");
-        System.out.println("2. Vegetable");
-        System.out.println("3. Book");
-
-        int choice = scanner.nextInt();
-
-        for (int i = 0; i < capacity; i++) {
-            switch (choice) {
-                case 1:
-
+        for (int i = 0; i < n; i++) {
+            switch (classType) {
+                case "car":
                     Car car = new Car.Builder()
                             .setPower(random.nextInt(300) + 1)
                             .setModel(getRandomModel())
@@ -36,7 +31,7 @@ public class FillArrayRandom implements ArrayFillOption {
                     arrayList.add(car);
                     break;
 
-                case 2:
+                case "vegetable":
                     Vegetable vegetable = new Vegetable.Builder()
                             .withColor(getRandomColor())
                             .withWeight((random.nextDouble() * 100))
@@ -45,7 +40,7 @@ public class FillArrayRandom implements ArrayFillOption {
                     arrayList.add(vegetable);
                     break;
 
-                case 3:
+                case "book":
 
                     Book book = new Book.Builder()
                             .author(getRandomAuthor())
@@ -56,8 +51,7 @@ public class FillArrayRandom implements ArrayFillOption {
                     break;
 
                 default:
-                    System.out.println("Неверный выбор, попробуйте снова.");
-                    i--;
+                    throw new InvalidTypeException("Указанный тип объекта не поддерживается");
             }
         }
 
@@ -88,17 +82,5 @@ public class FillArrayRandom implements ArrayFillOption {
     private String getRandomAuthor() {
         String[] authors = {"I’m Bored", "17 Things I’m Not Allowed to Do Anymore", "We Don’t Eat Our Classmates", "Click, Clack, Moo: Cows That Type", "The Very Hungry Caterpillar"};
         return authors[random.nextInt(authors.length)];
-    }
-
-    public static void main(String[] args) {
-        FillArrayRandom fillArrayRandom = new FillArrayRandom();
-        try {
-            List<Object> resultList = fillArrayRandom.fillArray();
-            for (Object obj : resultList) {
-                System.out.println(obj.toString());
-            }
-        } catch (Exception e) {
-            System.err.println("Произошла ошибка: " + e.getMessage());
-        }
     }
 }
