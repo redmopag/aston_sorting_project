@@ -1,6 +1,5 @@
 package aston.course_project.sorting.work_with_array;
 
-import aston.course_project.sorting.custom_classes.Parity;
 import aston.course_project.sorting.fill_arrays_options.ArrayFillOption;
 import aston.course_project.sorting.custom_classes.Book;
 import aston.course_project.sorting.custom_classes.Car;
@@ -19,9 +18,7 @@ public class WorkWithArray {
     private String classType;
     private String path;
 
-    List<Book> books;
-    List<Car> cars;
-    List<Vegetable> vegetables;
+    List list;
 
     private final BinarySearch binarySearch = new BinarySearch();
 
@@ -51,41 +48,18 @@ public class WorkWithArray {
         if(arrayFillOption == null){
             throw new InvalidArgumentException("Вариант заполнения массива не задан");
         }
-
         setClasTypeForFileInput();
 
-        switch (classType){
-            case "car":
-                cars = arrayFillOption.fillArray(arrayLength);
-                break;
-            case "book":
-                books = arrayFillOption.fillArray(arrayLength);
-                break;
-            case "vegetable":
-                vegetables = arrayFillOption.fillArray(arrayLength);
-                break;
-            default:
-                throw new InvalidArgumentException("Указанный класс " + classType + " не поддерживается");
-        }
+        list = arrayFillOption.fillArray(arrayLength);
     }
 
-    public <T> List<T> getList(){
-        return switch (classType) {
-            case "car" -> (List<T>) cars;
-            case "book" -> (List<T>) books;
-            case "vegetable" -> (List<T>) vegetables;
-            default -> null;
-        };
+    public List getList(){
+        return list;
     }
 
     public void sortArray(SortStrategy sortStrategy) throws InvalidArgumentException {
         if(sortStrategy != null){
-            switch (classType){
-                case "car" -> sortStrategy.sort(cars);
-                case "book" -> sortStrategy.sort(books);
-                case "vegetable" -> sortStrategy.sort(vegetables);
-                default -> throw new InvalidArgumentException("Неверно указан тип класса");
-            }
+            sortStrategy.sort(getList());
         } else{
             throw new InvalidArgumentException("Сортировка не выбрана");
         }
