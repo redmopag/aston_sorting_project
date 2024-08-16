@@ -1,9 +1,7 @@
 package aston.course_project.sorting.work_with_array;
 
+import aston.course_project.sorting.custom_classes.*;
 import aston.course_project.sorting.fill_arrays_options.ArrayFillOption;
-import aston.course_project.sorting.custom_classes.Book;
-import aston.course_project.sorting.custom_classes.Car;
-import aston.course_project.sorting.custom_classes.Vegetable;
 import aston.course_project.sorting.exceptions.InvalidArgumentException;
 import aston.course_project.sorting.sort_strategy.SortStrategy;
 
@@ -11,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.List;
 
 public class WorkWithArray {
@@ -18,7 +17,7 @@ public class WorkWithArray {
     private String classType;
     private String path;
 
-    List list;
+    List<Entity> list;
 
     private final BinarySearch binarySearch = new BinarySearch();
 
@@ -53,7 +52,7 @@ public class WorkWithArray {
         list = arrayFillOption.fillArray(arrayLength);
     }
 
-    public List getList(){
+    public List<Entity> getList(){
         return list;
     }
 
@@ -65,8 +64,8 @@ public class WorkWithArray {
         }
     }
 
-    public <T> Object binarySearch(T key){
-        int index = binarySearch.binarySearch(getList(), key);
+    public Object binarySearch(Entity key){
+        int index = binarySearch.binarySearch(list, key);
         if(index != -1) {
             return getList().get(index);
         } else {

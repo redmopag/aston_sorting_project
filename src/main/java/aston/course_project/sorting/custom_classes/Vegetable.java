@@ -4,7 +4,7 @@ import aston.course_project.sorting.exceptions.InvalidArgumentException;
 
 import java.util.Objects;
 
-public class Vegetable implements Comparable<Vegetable>, Parity {
+public class Vegetable extends Entity {
     private final String type;
     private final String color;
     private final int weight;
@@ -16,7 +16,9 @@ public class Vegetable implements Comparable<Vegetable>, Parity {
     }
 
     @Override
-    public int compareTo(Vegetable otherVegetable) {
+    public int compareTo(Entity o) {
+        Vegetable otherVegetable = (Vegetable) o;
+
         int result = this.type.compareTo(otherVegetable.type);
         if (result == 0) {
             result = this.weight - otherVegetable.weight;

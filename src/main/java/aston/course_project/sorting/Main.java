@@ -119,6 +119,7 @@ public class Main {
                 System.out.println("3. Сортировка только нечётных элементов коллекции");
 
                 sortChoice = scanner.nextInt();
+                scanner.nextLine();
                 if(sortChoice < 1 || sortChoice > 3){
                     System.out.println("Неверный ввод, попробуйте снова");
                     isIncorrect = true;

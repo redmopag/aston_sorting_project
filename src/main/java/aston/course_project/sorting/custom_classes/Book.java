@@ -4,7 +4,7 @@ import aston.course_project.sorting.exceptions.InvalidArgumentException;
 
 import java.util.Objects;
 
-public class Book implements Comparable<Book>, Parity {
+public class Book extends Entity {
     private final String author;
     private final String title;
     private final Integer pagesCount;
@@ -16,7 +16,9 @@ public class Book implements Comparable<Book>, Parity {
     }
 
     @Override
-    public int compareTo(Book otherBook) {
+    public int compareTo(Entity o) {
+        Book otherBook = (Book) o;
+
         int result = this.author.compareTo(otherBook.author);
         if (result == 0) {
             result = this.title.compareTo(otherBook.title);

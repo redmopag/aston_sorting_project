@@ -5,7 +5,7 @@ import aston.course_project.sorting.exceptions.InvalidArgumentException;
 
 import java.util.Objects;
 
-public class Car implements Comparable<Car>, Parity {
+public class Car extends Entity {
     private final Integer power;
     private final String model;
     private final Integer year;
@@ -15,18 +15,6 @@ public class Car implements Comparable<Car>, Parity {
         this.power = builder.power;
         this.model = builder.model;
         this.year = builder.year;
-    }
-
-    @Override
-    public int compareTo(Car otherCar) {
-        int result = this.model.compareTo(otherCar.model);
-        if (result == 0) {
-            result = this.power.compareTo(otherCar.power);
-            if (result == 0) {
-                result = this.year.compareTo(otherCar.year);
-            }
-        }
-        return result;
     }
 
     @Override
@@ -50,6 +38,20 @@ public class Car implements Comparable<Car>, Parity {
     @Override
     public boolean isOdd() {
         return power % 2 != 0;
+    }
+
+    @Override
+    public int compareTo(Entity o) {
+        Car otherCar = (Car) o;
+
+        int result = this.model.compareTo(otherCar.model);
+        if (result == 0) {
+            result = this.power.compareTo(otherCar.power);
+            if (result == 0) {
+                result = this.year.compareTo(otherCar.year);
+            }
+        }
+        return result;
     }
 
 

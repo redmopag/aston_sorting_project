@@ -6,7 +6,7 @@ public class BinarySearch {
 
     //возвращает индекс элемента в списке
     //если нужного элемента нет - возвращает -1
-    public <T> int binarySearch(List<? extends Comparable<? super T>> list, T key) {
+    public <T extends Comparable<T>> int binarySearch(List<T> list, T key) {
         if (list.isEmpty()) {
             return -1;
         }
