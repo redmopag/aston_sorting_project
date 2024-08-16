@@ -4,7 +4,6 @@ import aston.course_project.sorting.custom_classes.Book;
 import aston.course_project.sorting.custom_classes.Car;
 import aston.course_project.sorting.custom_classes.Vegetable;
 import aston.course_project.sorting.exceptions.InvalidArgumentException;
-import aston.course_project.sorting.fill_arrays_options.ArrayFillOption;
 import aston.course_project.sorting.fill_arrays_options.FillArrayByUser;
 import aston.course_project.sorting.fill_arrays_options.FillArrayFromFile;
 import aston.course_project.sorting.fill_arrays_options.FillArrayRandom;
@@ -20,14 +19,9 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
-    private static final Map<Integer, ArrayFillOption> arrayFactoryMap = new HashMap<>();
     private static final Map<Integer, SortStrategy> arraySortMap = new HashMap<>();
 
     public static void init(){
-        arrayFactoryMap.put(1, new FillArrayFromFile());
-        arrayFactoryMap.put(2, new FillArrayRandom());
-        arrayFactoryMap.put(3, new FillArrayByUser());
-
         arraySortMap.put(1, new ShellSortStrategy());
         arraySortMap.put(2, new EvenSortStrategy());
         arraySortMap.put(3, new OddSortStrategy());
@@ -52,23 +46,36 @@ public class Main {
 
                 int choice = scanner.nextInt();
                 scanner.nextLine(); // Очистка буфера после считывания числа
+                String classType;
                 switch (choice) {
                     case 4:
                         return;
                     case 1:
                         System.out.println("Введите путь до файла: ");
-                        workWithArray.setPath(scanner.nextLine());
-                        workWithArray.setArrayFactory(arrayFactoryMap.get(choice));
+                        String path = scanner.nextLine();
+
+                        workWithArray.setPath(path);
+                        workWithArray.setArrayFactory(new FillArrayFromFile(path));
                         break;
                     case 2:
+                        System.out.println("Введите класс, объекты которого заполнят массив:");
+                        System.out.println("Car");
+                        System.out.println("Book");
+                        System.out.println("Vegetable");
+
+                        classType = scanner.nextLine().toLowerCase();
+                        workWithArray.setClassType(classType);
+                        workWithArray.setArrayFactory(new FillArrayRandom(classType));
+                        break;
                     case 3:
                         System.out.println("Введите класс, объекты которого заполнят массив:");
                         System.out.println("Car");
                         System.out.println("Book");
                         System.out.println("Vegetable");
 
-                        workWithArray.setClassType(scanner.nextLine().toLowerCase());
-                        workWithArray.setArrayFactory(arrayFactoryMap.get(choice));
+                        classType = scanner.nextLine().toLowerCase();
+                        workWithArray.setClassType(classType);
+                        workWithArray.setArrayFactory(new FillArrayByUser(classType));
                         break;
                     default:
                         System.out.println("Неверный ввод, попробуйте снова");
@@ -93,10 +100,13 @@ public class Main {
 
             try {
                 workWithArray.setList(length);
+                System.out.println(workWithArray.getList());
             } catch (InvalidArgumentException e){
                 System.out.println(e.getMessage());
+                continue;
             } catch (IOException e){
                 System.out.println("Не удалось прочитать файл");
+                continue;
             }
 
             int sortChoice;
@@ -117,12 +127,14 @@ public class Main {
 
             try {
                 workWithArray.sortArray(arraySortMap.get(sortChoice));
+                System.out.println(workWithArray.getList());
             } catch (InvalidArgumentException e){
                 System.out.println(e.getMessage());
                 continue;
             }
 
             if (sortChoice == 1) {
+                System.out.println("Бинарный поиск:");
                 try {
                     switch (workWithArray.getClassType().toLowerCase()) {
                         case "car" -> System.out.println("Результат бинарного поиска: " +
@@ -147,6 +159,7 @@ public class Main {
         String color = scanner.nextLine();
         System.out.println("Введите вес: ");
         int weight = scanner.nextInt();
+        scanner.nextLine(); // Очистка буфера после считывания числа
 
         return new Vegetable.Builder(color, weight, type).build();
     }
@@ -159,6 +172,7 @@ public class Main {
         String title = scanner.nextLine();
         System.out.println("Введите кол-во страниц");
         int pagesCount = scanner.nextInt();
+        scanner.nextLine(); // Очистка буфера после считывания числа
 
         return new Book.Builder(author, title, pagesCount).build();
     }
@@ -167,10 +181,14 @@ public class Main {
         System.out.println("Машина");
         System.out.println("Введите мощность: ");
         int power = scanner.nextInt();
+        scanner.nextLine(); // Очистка буфера после считывания числа
+
         System.out.println("Введите модель машины: ");
         String model = scanner.nextLine();
+
         System.out.println("Введите год машины");
         int year = scanner.nextInt();
+        scanner.nextLine(); // Очистка буфера после считывания числа
 
         return new Car.Builder(power, model, year).build();
     }

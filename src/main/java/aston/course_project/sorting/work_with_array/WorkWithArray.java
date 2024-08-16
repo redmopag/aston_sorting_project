@@ -80,7 +80,12 @@ public class WorkWithArray {
 
     public void sortArray(SortStrategy sortStrategy) throws InvalidArgumentException {
         if(sortStrategy != null){
-            sortStrategy.sort(getList());
+            switch (classType){
+                case "car" -> sortStrategy.sort(cars);
+                case "book" -> sortStrategy.sort(books);
+                case "vegetable" -> sortStrategy.sort(vegetables);
+                default -> throw new InvalidArgumentException("Неверно указан тип класса");
+            }
         } else{
             throw new InvalidArgumentException("Сортировка не выбрана");
         }

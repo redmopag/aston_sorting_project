@@ -16,6 +16,10 @@ public class FillArrayFromFile implements ArrayFillOption {
 
     String path;
 
+    public FillArrayFromFile(String path){
+        this.path = path;
+    }
+
     public void setPath(String path){
         this.path = path;
     }

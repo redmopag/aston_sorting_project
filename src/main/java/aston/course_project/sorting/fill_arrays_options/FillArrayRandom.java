@@ -4,7 +4,6 @@ import aston.course_project.sorting.custom_classes.Book;
 import aston.course_project.sorting.custom_classes.Car;
 import aston.course_project.sorting.custom_classes.Vegetable;
 import aston.course_project.sorting.exceptions.InvalidArgumentException;
-import aston.course_project.sorting.exceptions.InvalidTypeException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +12,14 @@ import java.util.Random;
 public class FillArrayRandom implements ArrayFillOption {
     private final Random random = new Random();
 
-    private String classType;
+    private final String classType;
 
-    public void setClassType(String classType){
+    public FillArrayRandom(String classType){
         this.classType = classType;
     }
 
     @Override
-    public <T> List<T> fillArray(int n) throws InvalidTypeException, InvalidArgumentException {
+    public <T> List<T> fillArray(int n) throws InvalidArgumentException {
         List<Object> arrayList = new ArrayList<>(n);
 
         for (int i = 0; i < n; i++) {
@@ -48,11 +47,10 @@ public class FillArrayRandom implements ArrayFillOption {
                     break;
 
                 default:
-                    throw new InvalidTypeException("Указанный тип объекта не поддерживается");
+                    throw new InvalidArgumentException("Указанный тип объекта не поддерживается");
             }
         }
 
-        System.out.println(arrayList);
         return (List<T>) arrayList;
     }
 

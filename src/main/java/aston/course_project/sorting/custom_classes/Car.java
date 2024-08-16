@@ -3,6 +3,8 @@ package aston.course_project.sorting.custom_classes;
 
 import aston.course_project.sorting.exceptions.InvalidArgumentException;
 
+import java.util.Objects;
+
 public class Car implements Comparable<Car>, Parity {
     private final Integer power;
     private final String model;
@@ -25,6 +27,19 @@ public class Car implements Comparable<Car>, Parity {
             }
         }
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return Objects.equals(power, car.power) && Objects.equals(model, car.model) && Objects.equals(year, car.year);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(power, model, year);
     }
 
     @Override

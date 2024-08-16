@@ -4,6 +4,7 @@ import aston.course_project.sorting.custom_classes.Book;
 import aston.course_project.sorting.custom_classes.Car;
 import aston.course_project.sorting.custom_classes.Vegetable;
 import aston.course_project.sorting.exceptions.InvalidArgumentException;
+import aston.course_project.sorting.exceptions.InvalidTypeException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,17 +13,17 @@ import java.util.Scanner;
 public class FillArrayByUser implements ArrayFillOption {
     private final Scanner scanner = new Scanner(System.in);
 
-    private String classType;
+    private final String classType;
 
-    public void setClassType(String classType){
+    public FillArrayByUser(String classType){
         this.classType = classType;
     }
 
     @Override
-    public <K> List<K> fillArray(int n) {
+    public <K> List<K> fillArray(int n) throws InvalidArgumentException {
         List<K> objectList = new ArrayList<>(n);
 
-        while (objectList.size() <= n) {
+        while (objectList.size() < n) {
             System.out.println("Введите q, чтобы закончить ввод. Чтобы продолжить введите любую другую букву: ");
             String choice = scanner.nextLine();
             if(choice.equals("q")){
@@ -30,24 +31,26 @@ public class FillArrayByUser implements ArrayFillOption {
             }
 
             try {
-                K object = createObject(choice);
+                K object = createObject(classType);
                 if (object != null) {
                     objectList.add(object);
                 }
             } catch (InvalidArgumentException e){
                 System.out.println("Не удалось создать объект: " + e.getMessage());
+            } catch (InvalidTypeException e){
+                throw new InvalidArgumentException(e.getMessage());
             }
         }
 
         return objectList;
     }
 
-    private <K> K createObject(String choice) throws InvalidArgumentException {
+    private <K> K createObject(String choice) throws InvalidArgumentException, InvalidTypeException {
         return switch (choice) {
-            case "1" -> (K) createCar();
-            case "2" -> (K) createVegetable();
-            case "3" -> (K) createBook();
-            default -> null;
+            case "car" -> (K) createCar();
+            case "book" -> (K) createVegetable();
+            case "vegetable" -> (K) createBook();
+            default -> throw new InvalidTypeException("Неверный тип объекта");
         };
     }
 
@@ -63,10 +66,10 @@ public class FillArrayByUser implements ArrayFillOption {
     }
 
     private Vegetable createVegetable() throws InvalidArgumentException {
-        System.out.print("Введите тип овоща (или 'Выйти' для отмены): ");
+        System.out.print("Введите тип овоща: ");
         String type = scanner.nextLine();
 
-        System.out.println("Введите цвет овоща: ");
+        System.out.print("Введите цвет овоща: ");
         String color = scanner.nextLine();
 
         int weight = getPositiveInteger("Введите вес овоща (в кг): ");
@@ -75,10 +78,10 @@ public class FillArrayByUser implements ArrayFillOption {
     }
 
     private Book createBook() throws InvalidArgumentException {
-        System.out.print("Введите название книги (или 'Выйти' для отмены): ");
+        System.out.print("Введите название книги: ");
         String title = scanner.nextLine();
 
-        System.out.println("Введите автора книги: ");
+        System.out.print("Введите автора книги: ");
         String author = scanner.nextLine();
 
         int pagesCount = getPositiveInteger("Введите количество страниц: ");
