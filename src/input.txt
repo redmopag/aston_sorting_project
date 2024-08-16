@@ -1,0 +1,14 @@
+book
+author: Перельман
+title: Красоты математики
+pages: 124
+
+book
+author: Некрасов
+title: Рассказ о природе
+pages: 10
+
+book
+author: Карл Маркс
+title: Капитал
+pages: 137

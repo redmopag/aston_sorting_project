@@ -1,7 +1,8 @@
 package aston.course_project.sorting.custom_classes;
 
-import aston.course_project.sorting.Parity;
 import aston.course_project.sorting.exceptions.InvalidArgumentException;
+
+import java.util.Objects;
 
 public class Vegetable implements Comparable<Vegetable>, Parity {
     private final String type;
@@ -24,6 +25,19 @@ public class Vegetable implements Comparable<Vegetable>, Parity {
             }
         }
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vegetable vegetable = (Vegetable) o;
+        return weight == vegetable.weight && Objects.equals(type, vegetable.type) && Objects.equals(color, vegetable.color);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, color, weight);
     }
 
     @Override

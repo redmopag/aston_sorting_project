@@ -1,7 +1,8 @@
 package aston.course_project.sorting.custom_classes;
 
-import aston.course_project.sorting.Parity;
 import aston.course_project.sorting.exceptions.InvalidArgumentException;
+
+import java.util.Objects;
 
 public class Book implements Comparable<Book>, Parity {
     private final String author;
@@ -24,6 +25,19 @@ public class Book implements Comparable<Book>, Parity {
             }
         }
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(author, book.author) && Objects.equals(title, book.title) && Objects.equals(pagesCount, book.pagesCount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(author, title, pagesCount);
     }
 
     @Override
