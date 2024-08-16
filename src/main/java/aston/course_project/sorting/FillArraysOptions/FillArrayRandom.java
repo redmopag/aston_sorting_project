@@ -1,5 +1,9 @@
 package aston.course_project.sorting.FillArraysOptions;
 
+import aston.course_project.sorting.custom_classes.Book;
+import aston.course_project.sorting.custom_classes.Car;
+import aston.course_project.sorting.custom_classes.Vegetable;
+import aston.course_project.sorting.exceptions.InvalidArgumentException;
 import aston.course_project.sorting.exceptions.InvalidTypeException;
 
 import java.util.ArrayList;
@@ -17,35 +21,29 @@ public class FillArrayRandom implements ArrayFillOption {
     }
 
     @Override
-    public <T> List<T> fillArray(int n) throws InvalidTypeException {
+    public <T> List<T> fillArray(int n) throws InvalidTypeException, InvalidArgumentException {
         List<Object> arrayList = new ArrayList<>(n);
 
         for (int i = 0; i < n; i++) {
             switch (classType) {
                 case "car":
-                    Car car = new Car.Builder()
-                            .setPower(random.nextInt(300) + 1)
-                            .setModel(getRandomModel())
-                            .setYear(2000 + random.nextInt(24))
+                    Car car = new Car.Builder(random.nextInt(300) + 1,
+                            getRandomModel(), 2000 + random.nextInt(24))
                             .build();
                     arrayList.add(car);
                     break;
 
                 case "vegetable":
-                    Vegetable vegetable = new Vegetable.Builder()
-                            .withColor(getRandomColor())
-                            .withWeight((random.nextDouble() * 100))
-                            .withType(getRandomType())
+                    Vegetable vegetable = new Vegetable.Builder(getRandomColor(),
+                            (random.nextInt() * 100), getRandomType())
                             .build();
                     arrayList.add(vegetable);
                     break;
 
                 case "book":
 
-                    Book book = new Book.Builder()
-                            .author(getRandomAuthor())
-                            .title(getRandomTitle())
-                            .pagesCount(random.nextInt(1000) + 1)
+                    Book book = new Book.Builder(getRandomAuthor(), getRandomTitle(),
+                            random.nextInt(1000) + 1)
                             .build();
                     arrayList.add(book);
                     break;
