@@ -1,4 +1,4 @@
-package aston.course_project.sorting.FillArraysOptions;
+package aston.course_project.sorting.fill_arrays_options;
 
 import java.util.List;
 

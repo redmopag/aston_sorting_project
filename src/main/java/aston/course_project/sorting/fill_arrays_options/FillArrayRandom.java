@@ -1,4 +1,4 @@
-package aston.course_project.sorting.FillArraysOptions;
+package aston.course_project.sorting.fill_arrays_options;
 
 import aston.course_project.sorting.custom_classes.Book;
 import aston.course_project.sorting.custom_classes.Car;
@@ -9,7 +9,6 @@ import aston.course_project.sorting.exceptions.InvalidTypeException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 public class FillArrayRandom implements ArrayFillOption {
     private final Random random = new Random();
