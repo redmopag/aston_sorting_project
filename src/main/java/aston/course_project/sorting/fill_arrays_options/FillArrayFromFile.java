@@ -20,10 +20,6 @@ public class FillArrayFromFile implements ArrayFillOption {
         this.path = path;
     }
 
-    public void setPath(String path){
-        this.path = path;
-    }
-
     @Override
     public <T> List<T> fillArray(int n) throws InvalidArgumentException {
         List<T> list = new ArrayList<>(n);
