@@ -48,8 +48,8 @@ public class FillArrayByUser implements ArrayFillOption {
     private <K> K createObject(String choice) throws InvalidArgumentException, InvalidTypeException {
         return switch (choice) {
             case "car" -> (K) createCar();
-            case "book" -> (K) createVegetable();
-            case "vegetable" -> (K) createBook();
+            case "book" -> (K) createBook();
+            case "vegetable" -> (K) createVegetable();
             default -> throw new InvalidTypeException("Неверный тип объекта");
         };
     }
