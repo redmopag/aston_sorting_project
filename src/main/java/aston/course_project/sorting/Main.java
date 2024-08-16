@@ -4,29 +4,26 @@ import aston.course_project.sorting.custom_classes.Book;
 import aston.course_project.sorting.custom_classes.Car;
 import aston.course_project.sorting.custom_classes.Vegetable;
 import aston.course_project.sorting.exceptions.InvalidArgumentException;
-import aston.course_project.sorting.fill_array.ArrayFactory;
-import aston.course_project.sorting.fill_array.ArrayFromFileFactory;
+import aston.course_project.sorting.fill_array.ArrayFillOption;
+import aston.course_project.sorting.fill_array.ArrayFromFileFillOption;
 import aston.course_project.sorting.sort_strategy.EvenSortStrategy;
 import aston.course_project.sorting.sort_strategy.OddSortStrategy;
 import aston.course_project.sorting.sort_strategy.ShellSortStrategy;
 import aston.course_project.sorting.sort_strategy.SortStrategy;
 import aston.course_project.sorting.work_with_array.WorkWithArray;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
     private static final WorkWithArray workWithArray = new WorkWithArray();
-    private static final Map<Integer, ArrayFactory> arrayFactoryMap = new HashMap<>();
+    private static final Map<Integer, ArrayFillOption> arrayFactoryMap = new HashMap<>();
     private static final Map<Integer, SortStrategy> arraySortMap = new HashMap<>();
 
     public static void init(){
-        arrayFactoryMap.put(1, new ArrayFromFileFactory());
+        arrayFactoryMap.put(1, new ArrayFromFileFillOption());
 
         arraySortMap.put(1, new ShellSortStrategy());
         arraySortMap.put(2, new EvenSortStrategy());
@@ -53,9 +50,9 @@ public class Main {
                 String path = scanner.nextLine();
 
                 workWithArray.setPath(path);
-                ArrayFactory currentFactory = arrayFactoryMap.get(choice);
-                if(currentFactory instanceof ArrayFromFileFactory){
-                    ((ArrayFromFileFactory) currentFactory).setPath(path);
+                ArrayFillOption currentFactory = arrayFactoryMap.get(choice);
+                if(currentFactory instanceof ArrayFromFileFillOption){
+                    ((ArrayFromFileFillOption) currentFactory).setPath(path);
                 }
                 workWithArray.setArrayFactory(currentFactory);
             } else{

@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArrayFromFileFactory implements ArrayFactory {
+public class ArrayFromFileFillOption implements ArrayFillOption {
 
     String path;
 

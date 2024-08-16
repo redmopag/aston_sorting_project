@@ -1,6 +1,6 @@
 package aston.course_project.sorting.work_with_array;
 
-import aston.course_project.sorting.fill_array.ArrayFactory;
+import aston.course_project.sorting.fill_array.ArrayFillOption;
 import aston.course_project.sorting.custom_classes.Book;
 import aston.course_project.sorting.custom_classes.Car;
 import aston.course_project.sorting.custom_classes.Vegetable;
@@ -14,7 +14,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class WorkWithArray {
-    private ArrayFactory arrayFactory;
+    private ArrayFillOption arrayFillOption;
     private String classType;
     private String path;
 
@@ -24,8 +24,8 @@ public class WorkWithArray {
 
     private final BinarySearch binarySearch = new BinarySearch();
 
-    public void setArrayFactory(ArrayFactory arrayFactory){
-        this.arrayFactory = arrayFactory;
+    public void setArrayFactory(ArrayFillOption arrayFillOption){
+        this.arrayFillOption = arrayFillOption;
     }
 
     public void setPath(String path){
@@ -47,7 +47,7 @@ public class WorkWithArray {
     }
 
     public void setList(int arrayLength) throws IOException, InvalidArgumentException {
-        if(arrayFactory == null){
+        if(arrayFillOption == null){
             throw new InvalidArgumentException("Вариант заполнения массива не задан");
         }
 
@@ -55,13 +55,13 @@ public class WorkWithArray {
 
         switch (classType){
             case "car":
-                cars = arrayFactory.fillArray(arrayLength);
+                cars = arrayFillOption.fillArray(arrayLength);
                 break;
             case "book":
-                books = arrayFactory.fillArray(arrayLength);
+                books = arrayFillOption.fillArray(arrayLength);
                 break;
             case "vegetable":
-                vegetables = arrayFactory.fillArray(arrayLength);
+                vegetables = arrayFillOption.fillArray(arrayLength);
                 break;
             default:
                 throw new InvalidArgumentException("Указанный класс " + classType + " не поддерживается");
