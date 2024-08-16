@@ -1,4 +1,4 @@
-package aston.course_project.sorting.fill_array;
+package aston.course_project.sorting.fill_arrays_options;
 
 import aston.course_project.sorting.exceptions.InvalidArgumentException;
 
